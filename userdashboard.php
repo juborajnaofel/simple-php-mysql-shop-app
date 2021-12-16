@@ -1,28 +1,11 @@
 <?php
+ 
 
   session_start();
-  
-  // if ($user==FALSE && !isset($_COOKIE["email"]) && !isset($_COOKIE["id"])){
-  //   echo "Wrong Input";
-  //   $URL = "admin login.php?status=invalid";
-  //   header('Location: '.$URL);
-    
-  // }else{
-  //   // $exp_minutes = 6;
-  //   // setcookie("email", $user['email'], time() + (60*$exp_minutes));
-  //   // echo "<br>C:".$_COOKIE["email"];
-
-  //   //loading all products in homepage
-  //   $stmt = $conn->prepare("SELECT * FROM product");
-  //   $stmt -> execute();
-  //   $products = $stmt->fetchAll();
-  // }
-  
-
   if (isset($_SESSION["email"]) && isset($_SESSION["id"])){
     echo $_SESSION["email"]." ".$_SESSION["id"];
-    if( $_SESSION['logtype'] == "user"){
-      $URL = "userdashboard.php";
+    if( $_SESSION['logtype'] == "admin"){
+      $URL = "admindashboard.php";
       header('Location: '.$URL); 
     }
     //loading all products in homepage
@@ -35,22 +18,26 @@
     //admin login
     $email = $_POST['email'];
     $pass = $_POST['password'];
-    $stmt = $conn->prepare("SELECT * FROM admin WHERE (email=:email and password=:pass)");
+    
+    $stmt = $conn->prepare("SELECT * FROM user WHERE (email=:email and password=:pass)");
     $stmt->execute(['email' => $email, 'pass' => $pass]); 
     $user = $stmt->fetch();
+
     if ($user==FALSE){
       echo "Wrong password or email!";
-      $URL = "admin login.php?status=invalid";
+      $URL = "user sign in and sign up.php?status=invalid";
       header('Location: '.$URL);
       
     }else{
       $_SESSION["email"] = $user['email'];
       $_SESSION['id'] = $user['id'];
-      $_SESSION['logtype'] = "admin";
-      $URL = "admindashboard.php";
+      $_SESSION["location"] = $user['location'];
+      $_SESSION['name'] = $user['name'];
+      $_SESSION['logtype'] == "user";
+      $URL = "userdashboard.php";
       header('Location: '.$URL); 
     }
-  }
+  }  
 
 ?>
 
@@ -71,7 +58,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Logged user: <?php echo $_SESSION["name"] ; ?></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -85,7 +72,7 @@
           <a class="nav-link" href="#">Admin Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="adminlogout.php">Log out</a>
+          <a class="nav-link" href="userlogout.php">Log out</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -102,51 +89,6 @@
     </div>
   </nav>
   <br>
-  <div class="container">
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    [+] Add a product
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Create a product</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form method="post" action="create product.php">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Product name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                  placeholder="Enter a product name" name="name">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Unit price</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter a unit price" name="unitprice">
-              </div>
-              <label for="locOption">Location</label>
-              <select class="form-control" id="locOption" name="location">
-                <option>Dhaka</option>
-                <option>Rajshahi</option>
-                <option>Chittagong</option>
-              </select>
-              <br>
-              <br>
-              <button type="submit" class="btn btn-primary">Create Product</button>
-            </form>
-          </div>
-          <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div> -->
-        </div>
-      </div>
-    </div>
-  </div>
 
 
   <div class="container">
@@ -170,15 +112,28 @@
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title"><?php echo $row['name'] ?></h5>
-              <p class="card-text"><?php echo $row['unit_price'] ?></p>
+
+                <?php 
+                
+                  if($row['location']==$_SESSION["location"] ){ 
+                
+                ?>
+                  <p class="card-text">Original price: <s><?php echo $row['unit_price'] ?> bdt</s></p>
+                  <p class="card-text">Discount price:<?php echo $row['unit_price']- ($row['unit_price']*0.25) ?> bdt</p>
+              
+                <?php }else{ ?>
+
+                  <p class="card-text">Price: <?php echo $row['unit_price'] ?> bdt</p>
+
+                <?php } ?>
               <p class="card-text"><?php echo $row['location'] ?></p>
-              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#removeProd<?php echo $row['id'] ?>">Remove this product</a>
+              <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#orderProd<?php echo $row['id'] ?>">Order this product</a>
               <!-- Modal -->
-              <div class="modal fade" id="<?php echo "removeProd".$row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="<?php echo "orderProd".$row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Confirmation about product removal</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Confirmation about product order</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -190,8 +145,8 @@
                     <p>ID: <?php echo $row['id'] ?></p>
                     </div>
                     <div class="modal-footer">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure about removing this product?</h5>
-                    <button type="button" onclick="location.href = 'deleteproduct.php?id=<?php echo $row['id'] ?>';" class="btn btn-danger">Yes</button>
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure about order this product?</h5>
+                    <button type="button" onclick="location.href = 'placeproductorder.php?productid=<?php echo $row['id'] ?>&userid=<?php echo $user['id'] ?>';" class="btn btn-primary">Yes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                   </div>

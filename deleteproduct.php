@@ -6,4 +6,6 @@ $sql = "DELETE FROM product WHERE id=".$_GET['id']."";
 // use exec() because no results are returned
 $conn->exec($sql);
 echo "Record deleted successfully";
+$URL = "admindashboard.php";
+header('Location: '.$URL);
 ?>

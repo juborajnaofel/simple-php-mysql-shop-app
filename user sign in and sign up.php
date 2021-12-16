@@ -11,7 +11,7 @@
   session_start();
   if (isset($_SESSION["email"]) && isset($_SESSION["id"])){
 
-      $URL = "admindashboard.php";
+      $URL = "userdashboard.php";
       header('Location: '.$URL);
   }
 ?>
@@ -49,8 +49,8 @@
   </nav>
   <br>
   <div class="container">
-    <h1> Admin login </h1>
-    <form method="post" action="admindashboard.php">
+    <h1>User sign in </h1>
+    <form method="post" action="userdashboard.php">
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -67,6 +67,43 @@
       </div> -->
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <h1> Create an account </h1>
+    <form method="post" action="userReg.php">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your fullname" name="name">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+          placeholder="Enter email" name="email">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+      </div>
+      <label for="locOption">Location</label>
+      <select class="form-control" id="locOption" name="location">
+        <option>Dhaka</option>
+        <option>Rajshahi</option>
+        <option>Chittagong</option>
+      </select>
+      <!-- <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div> -->
+      <br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

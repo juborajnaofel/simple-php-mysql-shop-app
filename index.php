@@ -1,9 +1,23 @@
 <?php 
+  session_start();
+  if (isset($_SESSION["email"]) && isset($_SESSION["id"])){
+    if($_SESSION["logtype"]=="admin"){
+      $URL = "admindashboard.php";
+      header('Location: '.$URL);
+    }elseif($_SESSION["logtype"]=="user"){
+      $URL = "userdashboard.php";
+      header('Location: '.$URL);
+    }
+  }
+
   require "connection.php";
   //loading all products in homepage
   $stmt = $conn->prepare("SELECT * FROM product");
   $stmt -> execute();
   $products = $stmt->fetchAll();
+
+
+
 ?>
 
 
@@ -36,17 +50,9 @@
         <a class="nav-link" href="admin login.php">Admin Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown link
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+        <a class="nav-link" href="user sign in and sign up.php">User Signup/Sign in</a>
+
+
       </li>
     </ul>
   </div>
@@ -76,7 +82,7 @@
             <h5 class="card-title"><?php echo $row['name'] ?></h5>
             <p class="card-text"><?php echo $row['unit_price'] ?></p>
             <p class="card-text"><?php echo $row['location'] ?></p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a href="user sign in and sign up.php" class="btn btn-primary">Sign-up or Sign-in to Buy this</a>
           </div>
         </div>
 
