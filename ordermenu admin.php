@@ -77,7 +77,7 @@
           <td>
           <form method="post" action="editorderstatus.php">
             <div class="input-group">
-              <input type="text" value="<?php echo $r['id']; ?>" name="id" />
+              <input type="hidden" value="<?php echo $r['id']; ?>" name="id" />
               <select class="custom-select" id="inputGroupSelect04" name="status">
                 <option selected>Choose...</option>
                 <option value="submitted">submitted</option>

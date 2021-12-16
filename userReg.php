@@ -11,9 +11,8 @@
   $conn->exec($sql);
   //echo "New record created successfully";
 
-  $_SESSION["email"] = $user['email'];
-  $_SESSION['id'] = $user['id'];
-  $URL = "userdashboard.php";
+
+  $URL = "user sign in and sign up.php?status=account_created";
   header('Location: '.$URL); 
 
 ?>

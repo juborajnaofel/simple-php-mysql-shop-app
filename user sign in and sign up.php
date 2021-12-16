@@ -6,6 +6,8 @@
   if(isset($_GET['status'])){
     if($_GET['status']=='invalid'){
       echo "<script> alert('Wrong password or email!');  </script>";
+    }elseif($_GET['status']=='account_created'){
+      echo "<script> alert('Account created! You can now login using your credentials');  </script>";
     }
   }
   session_start();
@@ -49,7 +51,7 @@
   </nav>
   <br>
   <div class="container">
-    <h1>User sign in </h1>
+    <h1>User Log in </h1>
     <form method="post" action="userdashboard.php">
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
@@ -65,7 +67,7 @@
         <input type="checkbox" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div> -->
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Log in</button>
     </form>
     <br>
     <br>
@@ -100,8 +102,10 @@
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div> -->
       <br>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Create an account</button>
     </form>
+    <br>
+    <br>
 
 
   </div>
