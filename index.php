@@ -1,3 +1,17 @@
+<?php 
+  require "connection.php";
+  //loading all products in homepage
+  $stmt = $conn->prepare("SELECT * FROM product");
+  $stmt -> execute();
+  $products = $stmt->fetchAll();
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,47 +51,49 @@
     </ul>
   </div>
 </nav>      
-<br>
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm">
+ 
+  <?php
+  $count = 0;
+  foreach ($products as $row) {
+    if($count%3==0){
+      ?>          
+     <!-- row starts for products -->
+     <div class="row my-3">     
+      <?php
+      $count +=1;
 
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+    }
+
+  ?>
+
+      <div class="col-sm my-3">
+
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="..." alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"><?php echo $row['name'] ?></h5>
+            <p class="card-text"><?php echo $row['unit_price'] ?></p>
+            <p class="card-text"><?php echo $row['location'] ?></p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
         </div>
+
       </div>
 
-    </div>
-    <div class="col-sm">
 
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+
+  <?php 
+    if($count%3==0){
+      ?>              
       </div>
+      <!-- row ends for products -->
+      <?php
 
-    </div>
-    <div class="col-sm">
-
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
+    }
+  } 
+  ?>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
