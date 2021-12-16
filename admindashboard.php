@@ -144,7 +144,33 @@
               <h5 class="card-title"><?php echo $row['name'] ?></h5>
               <p class="card-text"><?php echo $row['unit_price'] ?></p>
               <p class="card-text"><?php echo $row['location'] ?></p>
-              <a href="#" class="btn btn-danger">Remove</a>
+              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#removeProd<?php echo $row['id'] ?>">Remove this product</a>
+              <!-- Modal -->
+              <div class="modal fade" id="<?php echo "removeProd".$row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirmation about product removal</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                    <h5>Name: <?php echo $row['name'] ?></h5>
+                    <p>Unit Price: <?php echo $row['unit_price'] ?></p>
+                    <p>Location: <?php echo $row['location'] ?></p>
+                    <p>ID: <?php echo $row['id'] ?></p>
+                    </div>
+                    <div class="modal-footer">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure about removing this product?</h5>
+                    <button type="button" onclick="location.href = 'deleteproduct.php?id=<?php echo $row['id'] ?>';" class="btn btn-danger">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             </div>
           </div>
 
