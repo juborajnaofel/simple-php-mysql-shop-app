@@ -11,7 +11,7 @@
 
     //loading all orders in ordermenu
     require "connection.php";
-    $stmt = $conn->prepare("SELECT * FROM product_order");
+    $stmt = $conn->prepare("SELECT pid,COUNT(id) as orders FROM product_order GROUP BY pid");
     $stmt -> execute();
     $products = $stmt->fetchAll();
 
@@ -46,7 +46,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="order count.php">Check each product has how many orders</a>
+          <a class="nav-link" href="ordermenu admin.php">Manage Orders</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="adminlogout.php">Log out</a>
@@ -61,37 +61,15 @@
     <table class="table table-dark">
       <thead>
         <tr>
-          <th scope="col">Order ID</th>
-          <th scope="col">User ID</th>
           <th scope="col">Product ID</th>
-          <th scope="col">Final Price</th>
-          <th scope="col">Status</th>
+          <th scope="col"># of Orders</th>
         </tr>
       </thead>
       <tbody>
       <?php foreach ($products as $r) { ?>
         <tr>
-          <td><?php echo $r['id']; ?></td>
-          <td><?php echo $r['uid']; ?></td>
           <td><?php echo $r['pid']; ?></td>
-          <td><?php echo $r['final_price']; ?></td>
-          <td><?php echo $r['status']; ?></td>
-          <td>
-          <form method="post" action="editorderstatus.php">
-            <div class="input-group">
-              <input type="hidden" value="<?php echo $r['id']; ?>" name="id" />
-              <select class="custom-select" id="inputGroupSelect04" name="status">
-                <option selected>Choose...</option>
-                <option value="submitted">submitted</option>
-                <option value="in transit">in transit</option>
-                <option value="delivered">delivered</option>
-              </select>
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">Change status</button>
-              </div>
-            </div>
-          </form>
-          </td>
+          <td><?php echo $r['orders']; ?></td>
         </tr>
       <?php } ?>
       </tbody>
