@@ -33,7 +33,7 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Admin Login</a>
+        <a class="nav-link" href="admin login.php">Admin Login</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Pricing</a>

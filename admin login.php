@@ -1,3 +1,16 @@
+<?php
+  // if(isset($_COOKIE["email"])){
+  //   $URL = "admindashboard.php";
+  //   header('Location: '.$URL);
+  // }
+  if(isset($_GET['status'])){
+    if($_GET['status']=='invalid'){
+      echo "<script> alert('Invalid Input!');  </script>";
+    }
+  }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +28,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -23,50 +36,30 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Admin Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+          <a class="nav-link" href="index.php"> ❮ Go back to homepage <span class="sr-only">(current)</span></a>
         </li>
       </ul>
     </div>
   </nav>
   <br>
   <div class="container">
-    <h1>Create a product:</h1>
-    <form>
+    <h1> Admin login </h1>
+    <form method="post" action="admindashboard.php">
       <div class="form-group">
-        <label for="exampleInputEmail1">Product name</label>
+        <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-          placeholder="Enter a product name">
+          placeholder="Enter email" name="email">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Unit price</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter a unit price">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
       </div>
-      <label for="locOption">Location</label>
-      <select class="form-control" id="locOption">
-        <option>Dhaka</option>
-        <option>Rajshahi</option>
-        <option>Chittagong</option>
-      </select>
-      <br>
-      <br>
-      <button type="submit" class="btn btn-primary">Create Product</button>
+      <!-- <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div> -->
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
