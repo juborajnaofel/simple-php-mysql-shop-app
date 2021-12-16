@@ -58,12 +58,12 @@
   </div>
 </nav>      
 
-<div class="container">
+<div class="container" align="center">
  
   <?php
   $count = 0;
-  foreach ($products as $row) {
-    if($count%3==0){
+  foreach ($products as $r) {
+    if($count%2==0){
       ?>          
      <!-- row starts for products -->
      <div class="row my-3">     
@@ -76,12 +76,11 @@
 
       <div class="col-sm my-3">
 
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card" style="height:15rem; width: 30rem;">
           <div class="card-body">
-            <h5 class="card-title"><?php echo $row['name'] ?></h5>
-            <p class="card-text"><?php echo $row['unit_price'] ?></p>
-            <p class="card-text"><?php echo $row['location'] ?></p>
+            <h5 class="card-title"><?php echo $r['name'] ?></h5>
+            <p class="card-text">Price: <?php echo $r['unit_price'] ?> bdt</p>
+            <p class="card-text">Location: <?php echo $r['location'] ?></p>
             <a href="user sign in and sign up.php" class="btn btn-primary">Sign-up or Sign-in to Buy this</a>
           </div>
         </div>
@@ -91,7 +90,7 @@
 
 
   <?php 
-    if($count%3==0){
+    if($count%2==0){
       ?>              
       </div>
       <!-- row ends for products -->

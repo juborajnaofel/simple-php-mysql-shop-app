@@ -21,11 +21,11 @@
 
   if (isset($_SESSION["email"]) && isset($_SESSION["id"])){
     echo $_SESSION["email"]." ".$_SESSION["id"];
-    if( $_SESSION['logtype'] == "user"){
+    if( isset($_SESSION['logtype']) && $_SESSION['logtype'] == "user"){
       $URL = "userdashboard.php";
       header('Location: '.$URL); 
     }
-    //loading all products in homepage
+    //loading all products
     require "connection.php";
     $stmt = $conn->prepare("SELECT * FROM product");
     $stmt -> execute();
@@ -78,31 +78,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Admin Login</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="adminlogout.php">Log out</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
         </li>
       </ul>
     </div>
   </nav>
   <br>
-  <div class="container">
+  <div class="container" align="center">
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -146,15 +129,22 @@
         </div>
       </div>
     </div>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" onclick="location.href = 'ordermenu admin.php';">
+      Manage Orders
+    </button>
+
   </div>
 
 
-  <div class="container">
+  <div class="container" align="center">
  
     <?php
     $count = 0;
-    foreach ($products as $row) {
-      if($count%3==0){
+    foreach ($products as $r) {
+      if($count%2==0){
         ?>          
         <!-- row starts for products -->
         <div class="row my-3">     
@@ -167,14 +157,14 @@
 
         <div class="col-sm my-3">
 
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="height:15rem; width: 30rem;">
             <div class="card-body">
-              <h5 class="card-title"><?php echo $row['name'] ?></h5>
-              <p class="card-text"><?php echo $row['unit_price'] ?></p>
-              <p class="card-text"><?php echo $row['location'] ?></p>
-              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#removeProd<?php echo $row['id'] ?>">Remove this product</a>
+              <h5 class="card-title"><?php echo $r['name'] ?></h5>
+              <p class="card-text"><?php echo $r['unit_price'] ?> bdt</p>
+              <p class="card-text"><?php echo $r['location'] ?></p>
+              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#removeProd<?php echo $r['id'] ?>">Remove this product</a>
               <!-- Modal -->
-              <div class="modal fade" id="<?php echo "removeProd".$row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="<?php echo "removeProd".$r['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -184,14 +174,14 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                    <h5>Name: <?php echo $row['name'] ?></h5>
-                    <p>Unit Price: <?php echo $row['unit_price'] ?></p>
-                    <p>Location: <?php echo $row['location'] ?></p>
-                    <p>ID: <?php echo $row['id'] ?></p>
+                    <h5>Name: <?php echo $r['name'] ?></h5>
+                    <p>Unit Price: <?php echo $r['unit_price'] ?> bdt</p>
+                    <p>Location: <?php echo $r['location'] ?></p>
+                    <p>ID: <?php echo $r['id'] ?></p>
                     </div>
                     <div class="modal-footer">
                     <h5 class="modal-title" id="exampleModalLabel">Are you sure about removing this product?</h5>
-                    <button type="button" onclick="location.href = 'deleteproduct.php?id=<?php echo $row['id'] ?>';" class="btn btn-danger">Yes</button>
+                    <button type="button" onclick="location.href = 'deleteproduct.php?id=<?php echo $r['id'] ?>';" class="btn btn-danger">Yes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                   </div>
@@ -207,7 +197,7 @@
 
 
     <?php 
-      if($count%3==0){
+      if($count%2==0){
         ?>              
         </div>
         <!-- row ends for products -->

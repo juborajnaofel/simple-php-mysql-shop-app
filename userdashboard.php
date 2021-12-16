@@ -4,11 +4,11 @@
   session_start();
   if (isset($_SESSION["email"]) && isset($_SESSION["id"])){
     echo $_SESSION["email"]." ".$_SESSION["id"];
-    if( $_SESSION['logtype'] == "admin"){
+    if( isset($_SESSION['logtype']) && $_SESSION['logtype'] == "admin"){
       $URL = "admindashboard.php";
       header('Location: '.$URL); 
     }
-    //loading all products in homepage
+    //loading all products
     require "connection.php";
     $stmt = $conn->prepare("SELECT * FROM product");
     $stmt -> execute();
@@ -91,12 +91,12 @@
   <br>
 
 
-  <div class="container">
+  <div class="container" align="center">
  
     <?php
     $count = 0;
-    foreach ($products as $row) {
-      if($count%3==0){
+    foreach ($products as $r) {
+      if($count%2==0){
         ?>          
         <!-- row starts for products -->
         <div class="row my-3">     
@@ -109,27 +109,27 @@
 
         <div class="col-sm my-3">
 
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="height:20rem; width: 30rem;">
             <div class="card-body">
-              <h5 class="card-title"><?php echo $row['name'] ?></h5>
+              <h5 class="card-title"><?php echo $r['name'] ?></h5>
 
                 <?php 
                 
-                  if($row['location']==$_SESSION["location"] ){ 
+                  if($r['location']==$_SESSION["location"] ){ 
                 
                 ?>
-                  <p class="card-text">Original price: <s><?php echo $row['unit_price'] ?> bdt</s></p>
-                  <p class="card-text">Discount price:<?php echo $row['unit_price']- ($row['unit_price']*0.25) ?> bdt</p>
+                  <p class="card-text"><b>Original price:</b> <s color="red"><?php echo $r['unit_price'] ?> bdt</s></p>
+                  <p class="card-text"><b>Discount price:</b> <?php echo $r['unit_price']- ($r['unit_price']*0.25) ?> bdt</p>
               
                 <?php }else{ ?>
 
-                  <p class="card-text">Price: <?php echo $row['unit_price'] ?> bdt</p>
+                  <p class="card-text">Price: <?php echo $r['unit_price'] ?> bdt</p>
 
                 <?php } ?>
-              <p class="card-text"><?php echo $row['location'] ?></p>
-              <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#orderProd<?php echo $row['id'] ?>">Order this product</a>
+              <p class="card-text"><?php echo $r['location'] ?></p>
+              <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#orderProd<?php echo $r['id'] ?>">Buy</a>
               <!-- Modal -->
-              <div class="modal fade" id="<?php echo "orderProd".$row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="<?php echo "orderProd".$r['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -139,14 +139,27 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                    <h5>Name: <?php echo $row['name'] ?></h5>
-                    <p>Unit Price: <?php echo $row['unit_price'] ?></p>
-                    <p>Location: <?php echo $row['location'] ?></p>
-                    <p>ID: <?php echo $row['id'] ?></p>
+                    <h5>Name: <?php echo $r['name'] ?></h5>
+                    <?php 
+                
+                      if($r['location']==$_SESSION["location"] ){ 
+                    
+                    ?>
+                      <p class="card-text"><b>Original price:</b> <s color="red"><?php echo $r['unit_price'] ?> bdt</s></p>
+                      <p class="card-text"><b>Discount price:</b> <?php echo $r['unit_price']- ($r['unit_price']*0.25) ?> bdt</p>
+                  
+                    <?php }else{ ?>
+
+                      <p class="card-text">Price: <?php echo $r['unit_price'] ?> bdt</p>
+
+                    <?php } ?>
+
+                    <p>Location: <?php echo $r['location'] ?></p>
+                    <p>ID: <?php echo $r['id'] ?></p>
                     </div>
                     <div class="modal-footer">
                     <h5 class="modal-title" id="exampleModalLabel">Are you sure about order this product?</h5>
-                    <button type="button" onclick="location.href = 'placeproductorder.php?productid=<?php echo $row['id'] ?>&userid=<?php echo $user['id'] ?>';" class="btn btn-primary">Yes</button>
+                    <button type="button" onclick="location.href = 'placeproductorder.php?productid=<?php echo $r['id'] ?>';" class="btn btn-primary">Yes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                   </div>
@@ -162,7 +175,7 @@
 
 
     <?php 
-      if($count%3==0){
+      if($count%2==0){
         ?>              
         </div>
         <!-- row ends for products -->
