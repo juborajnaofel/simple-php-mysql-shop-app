@@ -20,7 +20,7 @@
   
 
   if (isset($_SESSION["email"]) && isset($_SESSION["id"])){
-    echo $_SESSION["email"]." ".$_SESSION["id"];
+    //echo $_SESSION["email"]." ".$_SESSION["id"];
     if( isset($_SESSION['logtype']) && $_SESSION['logtype'] == "user"){
       $URL = "userdashboard.php";
       header('Location: '.$URL); 
