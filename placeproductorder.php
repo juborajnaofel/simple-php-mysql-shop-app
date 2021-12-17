@@ -28,18 +28,19 @@ $conn->exec($sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Order</title>
+    <title>Billing Receipt</title>
 </head>
 <body>
     <div id="bill" class="container" align="center">
         <h2>Your order have been placed successfully!!</h2>
         <hr>
-        <h1>Bill</h1>
+        <h1>Billing Receipt</h1>
         <hr>
         <p>Buyer name: <?php echo $_SESSION['name'] ?></p>
         <p>Buyer id: <?php echo $_SESSION['id'] ?></p>
         <p>Buyer location:<?php echo $_SESSION['location'] ?></p>
         <p>Product Name: <?php echo $product['name'] ?></p>
+        <p>Product ID: <?php echo $product['id'] ?></p>
         <p>Product location: <?php echo $product['location'] ?></p>
         <p>Product Quantity: 1</p>
         <p>Payment method: Cash on delivery</p>

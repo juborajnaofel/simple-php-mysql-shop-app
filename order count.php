@@ -11,7 +11,11 @@
 
     //loading all orders in ordermenu
     require "connection.php";
-    $stmt = $conn->prepare("SELECT pid,COUNT(id) as orders FROM product_order GROUP BY pid");
+    $stmt = $conn->prepare("SELECT product.name as pname,COUNT(product_order.id) as orders
+                            FROM product_order 
+                            INNER JOIN product
+                            ON product.id = product_order.pid
+                            GROUP BY product.name");
     $stmt -> execute();
     $products = $stmt->fetchAll();
 
@@ -38,7 +42,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">JuborajNaofel's shop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -47,6 +51,9 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="ordermenu admin.php">Manage Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admindashboard.php">Admin dashboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="adminlogout.php">Log out</a>
@@ -61,14 +68,14 @@
     <table class="table table-dark">
       <thead>
         <tr>
-          <th scope="col">Product ID</th>
+          <th scope="col">Product Name</th>
           <th scope="col"># of Orders</th>
         </tr>
       </thead>
       <tbody>
       <?php foreach ($products as $r) { ?>
         <tr>
-          <td><?php echo $r['pid']; ?></td>
+          <td><?php echo $r['pname']; ?></td>
           <td><?php echo $r['orders']; ?></td>
         </tr>
       <?php } ?>

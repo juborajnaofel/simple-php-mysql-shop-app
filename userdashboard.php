@@ -33,7 +33,7 @@
       $_SESSION['id'] = $user['id'];
       $_SESSION["location"] = $user['location'];
       $_SESSION['name'] = $user['name'];
-      $_SESSION['logtype'] == "user";
+      $_SESSION['logtype'] = "user";
       $URL = "userdashboard.php";
       header('Location: '.$URL); 
     }
@@ -48,7 +48,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title><?php echo $_SESSION['name'] ?></title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style>
@@ -58,32 +58,21 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Logged user: <?php echo $_SESSION["name"] ; ?></a>
+  <a class="navbar-brand" href="#">JuborajNaofel's shop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Logged user: <?php echo $_SESSION["name"] ; ?></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Admin Login</a>
+          <a class="nav-link" href="#">Location: <?php echo $_SESSION["location"] ; ?></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="userlogout.php">Log out</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
         </li>
       </ul>
     </div>
