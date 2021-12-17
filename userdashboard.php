@@ -147,7 +147,7 @@
                     <p>ID: <?php echo $r['id'] ?></p>
                     </div>
                     <div class="modal-footer">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure about order this product?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure about ordering this product?</h5>
                     <button type="button" onclick="location.href = 'placeproductorder.php?productid=<?php echo $r['id'] ?>';" class="btn btn-primary">Yes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>

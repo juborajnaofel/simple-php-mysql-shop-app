@@ -38,7 +38,7 @@ $conn->exec($sql);
         <hr>
         <p>Buyer name: <?php echo $_SESSION['name'] ?></p>
         <p>Buyer id: <?php echo $_SESSION['id'] ?></p>
-        <p>Buyer location:<?php echo $_SESSION['location'] ?></p>
+        <p>Buyer location: <?php echo $_SESSION['location'] ?></p>
         <p>Product Name: <?php echo $product['name'] ?></p>
         <p>Product ID: <?php echo $product['id'] ?></p>
         <p>Product location: <?php echo $product['location'] ?></p>
@@ -49,7 +49,7 @@ $conn->exec($sql);
         if($product['location']==$_SESSION["location"] ){ 
         
         ?>
-            <p>Original price: <?php echo $product['unit_price'] ?></p>
+            <p>Original price: <?php echo $product['unit_price'] ?> bdt</p>
             <p>Discount percentage: 25%</p>
             <hr>
             <p>Amount to be paid: <?php echo $product['unit_price']- ($product['unit_price']*0.25) ?> bdt</p>
@@ -57,7 +57,7 @@ $conn->exec($sql);
     
         <?php }else{ ?>
 
-            <p>Price: <?php echo $product['unit_price'] ?></p>
+            <p>Price: <?php echo $product['unit_price'] ?> bdt</p>
             <hr>
             <p>Amount to be paid: <?php echo $product['unit_price'] ?> bdt</p>
             <hr> 
