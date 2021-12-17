@@ -24,8 +24,8 @@ I have used Bootstrap, PHP, Mysql, HTML5, CSS, JS to build this shop site.
  <ul>
  <li>User sign up</li> 
  <li>User sign in</li>
- <li>User dashboard/li>
- <li>User can view products/li>
+ <li>User dashboard</li>
+ <li>User can view products</li>
  <li>Single product buy</li>
  <li>Discount according to location match</li>
  <li>Order placement</li>
